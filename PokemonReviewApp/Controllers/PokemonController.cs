@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
+using PokemonReviewApp.Dto;
 using PokemonReviewApp.Interfaces;
 using PokemonReviewApp.Models;
 
@@ -30,6 +31,26 @@ namespace PokemonReviewApp.Controllers
 
             return Ok(pokemons);
 
+        }
+
+        [HttpGet("{pokeId}")]
+        [ProducesResponseType(200, Type = typeof(Pokemon))]
+        [ProducesResponseType(400)]
+
+        public IActionResult GetPokemon(int pokeId)
+        {
+            if (!_pokemonRepository.PokemonExists(pokeId))
+            {
+                return NotFound();
+            }
+
+            var pokemon = _pokemonRepository.GetPokemon(pokeId);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(pokemon);
         }
     }
 }
