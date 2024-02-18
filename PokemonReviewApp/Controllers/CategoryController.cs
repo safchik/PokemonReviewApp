@@ -152,13 +152,11 @@ namespace PokemonReviewApp.Controllers
             var categoryToDelete = _categoryRepository.GetCategory(categoryId);
 
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
-            if(!_categoryRepository.DeleteCategory(categoryToDelete))
+            if (!_categoryRepository.DeleteCategory(categoryToDelete))
             {
-                ModelState.TryAddModelError("Something went wrong with deleting category");
+                ModelState.AddModelError("", "Something went wrong deleting category");
             }
 
             return NoContent();
