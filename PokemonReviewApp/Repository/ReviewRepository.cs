@@ -9,6 +9,7 @@ namespace PokemonReviewApp.Repository
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
+
         public ReviewRepository(DataContext context, IMapper mapper)
         {
             _context = context;
@@ -18,6 +19,18 @@ namespace PokemonReviewApp.Repository
         public bool CreateReview(Review review)
         {
             _context.Add(review);
+            return Save();
+        }
+
+        public bool DeleteReview(Review review)
+        {
+            _context.Remove(review);
+            return Save();
+        }
+
+        public bool DeleteReviews(List<Review> reviews)
+        {
+            _context.RemoveRange(reviews);
             return Save();
         }
 
